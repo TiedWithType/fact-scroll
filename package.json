@@ -1,0 +1,9 @@
+{
+ "name": "fact-scroll",
+ "description": "A Scrollable Journey Through Knowledge",
+ "version": "0.0.1",
+ "scripts": {
+  "start": "vite--open",
+  "build": "vite build"
+ }
+}
