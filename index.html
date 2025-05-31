@@ -14,91 +14,90 @@
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
  <link
    rel="preload"
-   href="script.js"
+   href="script.mjs"
    as="script"
    crossorigin="anonymous" />
-  <script src="script.js" type="module"></script>
+  <script src="script.mjs" type="module"></script>
   <title>FactScroll – A Scrollable Journey Through Knowledge</title>
  </head>
  <body>
-  <div class="dot-nav" id="dot-nav"></div>
-  <div class="container">
-  <section class="section" id="kosmos" data-label="Kosmos" style="background:#0b3d91; color:#fff;">
+<fact-container show-scroll>
+  <fact-card style="--bg: #0b3d91; color: #fff;" data-tooltip="Kosmos">
   <div class="content">
     <h2><i class="fas fa-rocket"></i> Kosmos</h2>
     <p>W kosmosie nie słychać dźwięków – brak tam powietrza!</p>
   </div>
-</section>
+</fact-card>
 
-<section class="section" id="ocean" data-label="Ocean" style="background:#004d40; color:#e0f7fa;">
+<fact-card style="--bg: #004d40; color: #e0f7fa;" data-tooltip="Ocean">
   <div class="content">
     <h2><i class="fas fa-water"></i> Ocean</h2>
     <p>Ocean pochłania ponad 90% ciepła emitowanego przez Ziemię.</p>
   </div>
-</section>
+</fact-card>
 
-<section class="section" id="jezyki" data-label="Języki" style="background:#ffab00; color:#212121;">
+<fact-card style="--bg: #ffab00; color: #212121;" data-tooltip="Języki">
   <div class="content">
     <h2><i class="fas fa-language"></i> Języki</h2>
     <p>Na świecie istnieje ponad 7 000 języków.</p>
   </div>
-</section>
+</fact-card>
 
-<section class="section" id="cialo" data-label="Ciało" style="background:#880e4f; color:#ffe6f0;">
+<fact-card style="--bg: #880e4f; color: #ffe6f0;" data-tooltip="Ciało">
   <div class="content">
     <h2><i class="fas fa-user"></i> Ludzkie ciało</h2>
     <p>Ludzka kość udowa jest silniejsza niż beton.</p>
   </div>
-</section>
+</fact-card>
 
-<section class="section" id="zwierzeta" data-label="Zwierzęta" style="background:#33691e; color:#f1f8e9;">
+<fact-card style="--bg: #33691e; color: #f1f8e9;" data-tooltip="Zwierzęta">
   <div class="content">
     <h2><i class="fas fa-paw"></i> Zwierzęta</h2>
     <p>Ośmiornice mają trzy serca i niebieską krew.</p>
   </div>
-</section>
+</fact-card>
 
-<section class="section" id="internet" data-label="Internet" style="background:#263238; color:#80deea;">
+<fact-card style="--bg: #263238; color: #80deea;" data-tooltip="Internet">
   <div class="content">
     <h2><i class="fas fa-wifi"></i> Internet</h2>
     <p>Ponad połowa całego ruchu internetowego pochodzi od botów.</p>
   </div>
-</section>
+</fact-card>
 
-<section class="section" id="czekolada" data-label="Czekolada" style="background:#4e342e; color:#fbe9e7;">
+<fact-card style="--bg: #4e342e; color: #fbe9e7;" data-tooltip="Czekolada">
   <div class="content">
     <h2><i class="fas fa-cookie"></i> Czekolada</h2>
     <p>Czekolada była kiedyś używana jako waluta przez Azteków.</p>
   </div>
-</section>
+</fact-card>
 
-<section class="section" id="technologia" data-label="Technologia" style="background:#1a237e; color:#c5cae9;">
+<fact-card style="--bg: #1a237e; color: #c5cae9;" data-tooltip="Technologia">
   <div class="content">
     <h2><i class="fas fa-microchip"></i> Technologia</h2>
     <p>Pierwszy komputer ważył ponad 27 ton.</p>
   </div>
-</section>
+</fact-card>
 
-<section class="section" id="historia" data-label="Historia" style="background:#6a1b9a; color:#f3e5f5;">
+<fact-card style="--bg: #6a1b9a; color: #f3e5f5;" data-tooltip="Historia">
   <div class="content">
     <h2><i class="fas fa-landmark"></i> Historia</h2>
     <p>Kleopatra żyła bliżej czasów iPhone'a niż budowy piramid.</p>
   </div>
-</section>
+</fact-card>
 
-<section class="section" id="rosliny" data-label="Rośliny" style="background:#2e7d32; color:#f1f8e9;">
+<fact-card style="--bg: #2e7d32; color: #f1f8e9;" data-tooltip="Rośliny">
   <div class="content">
     <h2><i class="fas fa-leaf"></i> Rośliny</h2>
     <p>Bambus może urosnąć nawet 90 cm w ciągu jednego dnia.</p>
   </div>
-</section>
+</fact-card>
 
-<section class="section" id="podsumowanie" data-label="Podsumowanie" style="background:#212121; color:#fff;">
+<fact-card style="--bg: #212121; color: #fff;" data-tooltip="Podsumowanie">
   <div class="content">
     <h2><i class="fas fa-star"></i> Koniec</h2>
     <p>Dzięki za przeczytanie! Która ciekawostka najbardziej Cię zaskoczyła?</p>
   </div>
-</section>
-</div>
+</fact-card>
+</fact-container>
  </body>
 </html>
