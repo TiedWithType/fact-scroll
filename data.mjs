@@ -1,0 +1,37 @@
+export const data = [
+  {
+    icon: "code",
+    title: "42. Programowanie funkcyjne",
+    text: "Wprowadzenie do paradygmatu programowania funkcyjnego i jego zalet.",
+    bg: "linear-gradient(135deg, #ff416c, #ff4b2b, #ff6a00, #ffca28)",
+    fg: "#ffffff",
+  },
+  {
+    icon: "smartphone",
+    title: "43. Snap Scroll",
+    text: "Technika przewijania stron z zatrzymywaniem na pełnych sekcjach.",
+    bg: "linear-gradient(90deg, #00c6ff, #0072ff, #00d2ff, #004e92)",
+    fg: "#ffffff",
+  },
+  {
+    icon: "storage",
+    title: "44. Bazy danych NoSQL",
+    text: "Przegląd popularnych baz NoSQL i ich zastosowań w nowoczesnych aplikacjach.",
+    bg: "linear-gradient(45deg, #7bff6f, #32cd32, #006400, #004d00)",
+    fg: "#ffffff",
+  },
+  {
+    icon: "security",
+    title: "45. Bezpieczeństwo aplikacji webowych",
+    text: "Najlepsze praktyki ochrony danych i zapobiegania atakom.",
+    bg: "linear-gradient(225deg, #ff005c, #ff2a68, #ff6a00, #ffca28)",
+    fg: "#ffffff",
+  },
+  {
+    icon: "devices",
+    title: "46. Responsive Design",
+    text: "Projektowanie stron i aplikacji dostosowanych do różnych urządzeń.",
+    bg: "linear-gradient(60deg, #6a11cb, #2575fc, #00c6ff, #0083b0)",
+    fg: "#ffffff",
+  }
+];

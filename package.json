@@ -1,0 +1,31 @@
+{
+  "name": "fact-scroll",
+  "version": "1.0.0",
+  "description": "A scrollable journey through knowledge",
+  "keywords": [
+    "snap-scroll",
+    "snap",
+    "scroll",
+    "ux",
+    "ui",
+    "design",
+    "template"
+  ],
+  "homepage": "https://github.com/TiedWithType/fact-scroll#readme",
+  "bugs": {
+    "url": "https://github.com/TiedWithType/fact-scroll/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TiedWithType/fact-scroll.git"
+  },
+  "license": "ISC",
+  "author": "TiedWithType",
+  "type": "module",
+  "main": " ",
+  "scripts": {
+  },
+  "devDependencies": {
+   "vite": "^6.3.5"
+  }
+}
