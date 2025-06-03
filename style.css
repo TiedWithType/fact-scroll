@@ -156,3 +156,18 @@ body {
  text-align: center;
  margin: 0;
 }
+
+.hero {
+ color: #fff;
+ 
+ h2 {
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+ }
+ 
+ p {
+  font-size: 0.95rem;
+  text-align: center;
+  margin: 0;
+ }
+}

@@ -47,15 +47,6 @@ export class SnapScrollManager {
   }
  
   async collectSnaps() {
-   let topic = createCard({
-    fg: "#fff",
-    bg: "#2196f3",
-    icon: "fact_check",
-    title: "Witaj w FactScroll",
-    text: `Przed Tobą 46 faktów, Przewijaj po wiedzy!!!`
-   });
-   
-  await this.container.appendChild(topic);
  
   let chunks = await loadAllChunks();
  
