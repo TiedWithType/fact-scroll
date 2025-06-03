@@ -33,9 +33,10 @@ export class SnapScrollManager {
   nav = $.get(".nav");
   hook = undefined;
   index = 0;
+  static isActive = false;
 
   constructor() {
-    this.init();
+   
   }
 
   async init() {
