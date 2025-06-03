@@ -1,17 +1,10 @@
 import { createCard, generateCards } from "./cards.mjs";
 
 async function loadAllChunks() {
-  const manifest = [
-   "chunk_1", "chunk_2", "chunk_3"
-  ];
-
-  const chunks = await Promise.all(
-    manifest.map(filename =>
-      fetch(`./chunks/${filename}.json`).then(res => res.json())
-    )
-  );
-
-  return chunks.flat();
+ const raw = await fetch("facts.json");
+ const facts = await raw.json();
+ 
+ return facts.flat();
 }
 
 class $ {
@@ -49,9 +42,9 @@ export class SnapScrollManager {
  
   async collectSnaps() {
  
-  let chunks = await loadAllChunks();
+  let facts = await loadAllChunks();
  
-  generateCards(this.container, chunks);
+  generateCards(this.container, facts);
    
     this.snaps = $.getAll(".snap", this.container);
   }
