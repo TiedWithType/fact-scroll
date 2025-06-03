@@ -12,6 +12,8 @@
  -ms-overflow-style: none;
  scroll-behavior: smooth;
  font-family: "Quicksand", sans-serif;
+ font-display: swap;
+ font-optical-size: auto;
 }
 
 html,
@@ -159,6 +161,7 @@ body {
 
 .hero {
  color: #fff;
+ contain: layout;
  
  h2 {
   font-size: 1.25rem;
