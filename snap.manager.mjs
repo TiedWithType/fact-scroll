@@ -1,6 +1,18 @@
-//import { facts2 } from "./data2.mjs";
-//import { data } from "./data.mjs";
-import { generateCards } from "./cards.mjs";
+import { createCard, generateCards } from "./cards.mjs";
+
+async function loadAllChunks() {
+  const manifest = [
+   "chunk_1", "chunk_2", "chunk_3"
+  ];
+
+  const chunks = await Promise.all(
+    manifest.map(filename =>
+      fetch(`./chunks/${filename}.json`).then(res => res.json())
+    )
+  );
+
+  return chunks.flat();
+}
 
 class $ {
   static create(tag) {
@@ -33,13 +45,22 @@ export class SnapScrollManager {
     await this.assignEvents();
     
   }
-
-  async collectSnaps() {
-  let { data } = await import("./data.mjs");
-  let { data2 } = await import("./data2.mjs");
  
-  generateCards(this.container, 
-  [...data2, ...data]);
+  async collectSnaps() {
+   let topic = createCard({
+    fg: "#fff",
+    bg: "#2196f3",
+    icon: "fact_check",
+    title: "Witaj w FactScroll",
+    text: `Przed Tobą 46 faktów, Przewijaj po wiedzy!!!`
+   });
+   
+  await this.container.appendChild(topic);
+ 
+  let chunks = await loadAllChunks();
+ 
+  generateCards(this.container, chunks);
+   
     this.snaps = $.getAll(".snap", this.container);
   }
 
