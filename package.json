@@ -23,9 +23,9 @@
   "author": "TiedWithType",
   "type": "module",
   "main": " ",
-  "scripts": {
-  },
-  "devDependencies": {
-   "vite": "^6.3.5"
+  "scripts": {},
+  "dependencies": {
+    "vite": "^6.3.5",
+    "@vercel/speed-insights": "^1.2.0"
   }
 }
