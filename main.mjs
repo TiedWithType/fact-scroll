@@ -1,6 +1,8 @@
-import { SnapScrollManager } from "./snap.manager.mjs";
 import { injectSpeedInsights } from '@vercel/speed-insights';
 
 injectSpeedInsights();
 
-new SnapScrollManager();
+window.addEventListener("load", async () => {
+  const { SnapScrollManager } = await import("./snap.manager.mjs");
+  new SnapScrollManager();
+});
