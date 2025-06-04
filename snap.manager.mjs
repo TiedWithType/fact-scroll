@@ -1,24 +1,11 @@
 import { createCard, generateCards } from "./cards.mjs";
+import { $ } from "./lib/dom.mjs";
 
 async function loadAllChunks() {
  const raw = await fetch("facts.json");
  const facts = await raw.json();
  
  return facts.flat();
-}
-
-class $ {
-  static create(tag) {
-    return document.createElement(tag);
-  }
-
-  static get(query, root = document) {
-    return root.querySelector(query);
-  }
-
-  static getAll(query, root = document) {
-    return Array.from(root.querySelectorAll(query));
-  }
 }
 
 export class SnapScrollManager {
@@ -29,7 +16,34 @@ export class SnapScrollManager {
   static isActive = false;
 
   constructor() {
-   
+    // Uruchamiamy init z opóźnieniem (idle + fallback na interakcję)
+    const runInit = async () => {
+      if (!SnapScrollManager.isActive) {
+        await this.init();
+        SnapScrollManager.isActive = true;
+      }
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(runInit, { timeout: 2000 });
+    } else {
+      // fallback: odpal przy pierwszej interakcji
+      const onUserInteraction = () => {
+        runInit();
+        window.removeEventListener('scroll', onUserInteraction);
+        window.removeEventListener('touchstart', onUserInteraction);
+        window.removeEventListener('mousemove', onUserInteraction);
+        window.removeEventListener('keydown', onUserInteraction);
+      };
+
+      window.addEventListener('scroll', onUserInteraction, { passive: true });
+      window.addEventListener('touchstart', onUserInteraction, { passive: true });
+      window.addEventListener('mousemove', onUserInteraction, { passive: true });
+      window.addEventListener('keydown', onUserInteraction, { passive: true });
+
+      // Timeout, jeśli użytkownik nic nie zrobi - 3s
+      setTimeout(runInit, 3000);
+    }
   }
 
   async init() {
@@ -74,6 +88,10 @@ export class SnapScrollManager {
       this.assignSnapId(snap);
       this.buildLink(snap);
     });
+    
+    this.indicator = $.create("div");
+this.indicator.classList.add("indicator");
+this.nav.appendChild(this.indicator);
 
     if (this.nav.childElementCount > 10) {
       this.nav.classList.add("scrollable");
@@ -88,34 +106,54 @@ export class SnapScrollManager {
     clearTimeout(this.hook);
     this.hook = setTimeout(() => {
       this.nav.classList.remove("visible");
-    }, 1500);
+    }, 2500);
   }
-
+  
   async setActiveLink(link, snapId) {
-    let active = link.dataset.snapRef === snapId;
-    link.classList.toggle("active", active);
+  let isActive = link.dataset.snapRef === snapId;
+  if (!isActive) return false;
+  
 
-    if (active) {
-      link.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "center",
-      });
-    }
+  const { offsetTop, offsetLeft } = link;
+  const indicator = this.indicator;
+
+  const isRow = window.innerWidth >= 621;
+
+  if (isRow) {
+    indicator.style.left = `${offsetLeft}px`;
+    
+  } else {
+    indicator.style.top = `${offsetTop}px`;
+    
   }
+  
+  link.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+    inline: "center",
+  });
+
+
+  return true;
+}
+
+  
 
   async changingObserve({ snapTargetInline: x, snapTargetBlock: y }) {
     let snapId = (x ?? y).id;
-    this.links.forEach(link => this.setActiveLink(link, snapId));
+    this.links.every(link => this.setActiveLink(link, snapId));
   }
 
-  async addEvent(name, callback) {
-    this.container.addEventListener(name, callback);
-  }
+  async addEvent(name, callback, options = { passive: true }) {
+  this.container.addEventListener(name, callback, options);
+}
 
   async scrollEvent() {
-    this.addEvent("scroll", this.displayNavigation.bind(this));
-  }
+  const events = ["scroll", "touchstart", "mousemove", "wheel"];
+  events.forEach(ev => {
+    this.addEvent(ev, this.displayNavigation.bind(this), { passive: true });
+  });
+}
 
   async changingEvent() {
     this.addEvent("scrollsnapchanging", this.changingObserve.bind(this));
