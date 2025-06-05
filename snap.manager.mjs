@@ -2,10 +2,22 @@ import { createCard, generateCards } from "./cards.mjs";
 import { $ } from "./lib/dom.mjs";
 
 async function loadAllChunks() {
- const raw = await fetch("facts.json");
- const facts = await raw.json();
+ let $facts = localStorage.facts;
+
+ if($facts) {
+  let pFacts = await JSON.parse($facts);
+  
+  console.log(`loaded ${pFacts.length}`)
+  return pFacts;
+ } else {
+  const raw = await fetch("facts.json");
+  const facts = await raw.json();
  
- return facts.flat();
+  console.log("saving facts to storage")
+  localStorage.facts = JSON.stringify(facts);
+  
+  return facts.flat();
+ }
 }
 
 export class SnapScrollManager {
