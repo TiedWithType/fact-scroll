@@ -6,7 +6,7 @@ export function createCard({ icon, title, text, fg, bg }) {
  card.style.background = bg.trim();
  
  card.innerHTML = `
-    <span class="material-icons">${icon}</span>
+    <span class="material-symbols-outlined">${icon}</span>
     <h2>${title}</h2>
     <p>${text}</p>
   `;
