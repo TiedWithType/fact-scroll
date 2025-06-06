@@ -1,6 +1,6 @@
 @font-face {
  font-family: "Quicksand";
- src: url("font/regular.woff2") format("woff2");
+ src: url("/fonts/regular.woff2") format("woff2");
  font-weight: 400;
  font-display: block;
  font-optical-size: auto;
@@ -8,21 +8,21 @@
 
 @font-face {
  font-family: "Quicksand";
- src: url("font/bold.woff2") format("woff2");
+ src: url("/fonts/bold.woff2") format("woff2");
  font-weight: 700;
  font-display: block;
  font-optical-size: auto;
 }
 
 @font-face {
- font-family: 'Material Symbols Outlined';
+ font-family: 'MaterialSymbolsOutlined';
  font-style: normal;
  font-weight: 400;
- src: url('font/symbols.woff2') format('woff2');
+ src: url('/fonts/symbols.woff2') format('woff2');
 }
 
 .material-symbols-outlined {
- font-family: 'Material Symbols Outlined';    
+ font-family: 'MaterialSymbolsOutlined';    
  font-weight: normal;
  font-style: normal;
  font-size: 24px;
