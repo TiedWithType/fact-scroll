@@ -5,15 +5,11 @@ async function loadAllChunks() {
  let $facts = localStorage.facts;
 
  if($facts) {
-  let pFacts = await JSON.parse($facts);
-  
-  console.log(`loaded ${pFacts.length}`)
-  return pFacts;
+  return await JSON.parse($facts);
  } else {
-  const raw = await fetch("facts.json");
+  const raw = await fetch("/data/facts.json");
   const facts = await raw.json();
  
-  console.log("saving facts to storage")
   localStorage.facts = JSON.stringify(facts);
   
   return facts.flat();

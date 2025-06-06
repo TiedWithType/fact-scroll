@@ -1,0 +1,46 @@
+.card {
+ padding: 1.5rem;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ border-width: var(--linkSize);
+ border-color: var(--linkActiveBackground);
+ border-style: solid;
+ border-radius: calc(var(--linkSize) * 2);
+ color: var(--textColor);
+ background: var(--bgColor);
+ contain: content;
+ 
+ .material-symbols-outlined {
+ font-size: 2.5rem;
+ margin-bottom: 0.75rem;
+
+ @media (min-width: 621px) {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+ }
+}
+
+h2 {
+ font-size: 1.5rem;
+ line-height: 1.2;
+
+ @media (min-width: 621px) {
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  line-height: clamp(1.2, 1.5vw, 1.4);
+ }
+}
+
+p {
+ font-size: 1rem;
+ text-align: center;
+ margin: 0;
+ line-height: 1.4;
+ text-align: pretty;
+
+ @media (min-width: 621px) {
+  font-size: clamp(1rem, 1.5vw, 1.75rem);
+  line-height: clamp(1.4, 2vw, 2);
+ }
+}
+
+}

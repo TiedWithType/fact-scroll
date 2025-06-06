@@ -1,0 +1,26 @@
+@import "fonts.css";
+@import "navigation.css";
+@import "indicator.css";
+@import "link.css";
+@import "card.css";
+
+:root {
+ --maskY: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+ --maskX: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+ 
+ --textColor: #fff;
+ --bgColor: #202124;
+ --linkSize: 12px;
+ --linkBackground: rgba(255, 255, 255, 0.2);
+ --linkActiveBackground: rgba(255, 255, 255, 0.4);
+}
+
+* {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ overscroll-behavior: contain;
+ scrollbar-width: none;
+ -ms-overflow-style: none;
+ scroll-behavior: smooth;
+}

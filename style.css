@@ -1,25 +1,4 @@
-@font-face {
- font-family: "Quicksand";
- src: url("/fonts/regular.woff2") format("woff2");
- font-weight: 400;
- font-display: block;
- font-optical-size: auto;
-}
-
-@font-face {
- font-family: "Quicksand";
- src: url("/fonts/bold.woff2") format("woff2");
- font-weight: 700;
- font-display: block;
- font-optical-size: auto;
-}
-
-@font-face {
- font-family: 'MaterialSymbolsOutlined';
- font-style: normal;
- font-weight: 400;
- src: url('/fonts/symbols.woff2') format('woff2');
-}
+@import "/partial/root.css";
 
 .material-symbols-outlined {
  font-family: 'MaterialSymbolsOutlined';    
@@ -37,100 +16,15 @@
  -webkit-font-smoothing: antialiased;
 }
 
-:root {
- --maskY: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
- --maskX: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-}
-
-* {
- margin: 0;
- padding: 0;
- box-sizing: border-box;
- overscroll-behavior: contain;
- scrollbar-width: none;
- -ms-overflow-style: none;
- scroll-behavior: smooth;
- font-family: "Quicksand";
-}
-
 html,
 body {
- background: #202124;
+ color: var(--textColor);
+ background: var(--bgColor);
  height: 100dvh;
  width: 100vw;
  display: flex;
  flex-direction: column;
  overflow: hidden;
-}
-
-.nav {
-  display: flex;
-  flex-direction: column;
-  place-items: center;
-  place-content: start;
-  gap: 0.5rem;
-  width: max-content;
-  padding: 0.5rem;
-  position: fixed;
-  pointer-events: none;
-  top: 50%;
-  right: 0;
-  opacity: 0;
-  transform: translate(24px, -50%);
-  transition: all ease-in 0.3s;
-  will-change: opacity, transform;
-  z-index: 1000;
-
-  &.scrollable {
-   max-block-size: 200px;
-   overflow-x: hidden;
-   overflow-y: scroll;
-   mask-image: var(--maskY);
-   -webkit-mask-image: var(--maskY);
-  }
-
-  @media (min-width: 621px) {
-    flex-direction: row;
-    top: auto;
-    right: auto;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%) translateY(24px);
-    
-    &.scrollable {
-     max-height: none;
-     max-width: 200px;
-     overflow-y: hidden;
-     overflow-x: scroll;
-     mask-image: var(--maskX);
-    -webkit-mask-image: var(--maskX);
-    }
-  }
-
-  &.visible {
-    opacity: 1;
-    transform: translate(-10px, -50%);
-
-    @media (min-width: 621px) {
-      transform: translateX(-50%) translateY(-16px);
-    }
-  }
-
-  @starting-style {
-    opacity: 0;
-    transform: translate(24px, -50%);
-  }
-}
-
-.link {
- width: 12px;
- height: 12px;
- border-radius: 100%;
- background: rgba(255, 255, 255, 0.2);
- transition: all ease-in 0.3s;
- will-change: scale box-shadow;
- flex-shrink: 0;
- pointer-events: auto;
 }
 
 .container {
@@ -158,74 +52,7 @@ body {
   place-items: center;
   place-content: center;
   gap: 0.5rem;
-
   flex-shrink: 0;
+  font-family: "Quicksand";
  }
-}
-
-.card {
- padding: 1.5rem;
- display: flex;
- flex-direction: column;
- align-items: center;
- border: solid 12px rgba(255, 255, 255, 0.4);
- border-radius: 24px;
- 
- .material-symbols-outlined {
-  font-size: 48px;
-  margin-bottom: 0.75rem;
- }
- 
- h2 {
-  font-size: 1.25rem;
-  margin: 0.5rem 0;
- }
- 
- p {
-  font-size: 0.95rem;
-  text-align: center;
-  margin: 0;
- }
-}
-
-.hero {
- color: #fff;
- contain: layout;
- 
- h2 {
-  font-size: 1.25rem;
-  margin: 0.5rem 0;
- }
- 
- p {
-  font-size: 0.95rem;
-  text-align: center;
-  margin: 0;
- }
-}
-
-.indicator {
-  position: absolute;
-  border-radius: 50%;
-  width: 12px;
-  height: 12px;
-  z-index: 0;
-  pointer-events: none;
-  transform: scale(1);
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
-  animation: ripple-pulse 1.6s ease-out infinite;
-  transition: top 0.3s ease, left 0.3s ease;
-}
-
-@keyframes ripple-pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
-  }
-  70% {
-    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-  }
 }

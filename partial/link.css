@@ -1,0 +1,8 @@
+.link {
+ block-size: var(--linkSize);
+ inline-size: var(--linkSize);
+ border-radius: 50%;
+ background: var(--linkBackground);
+ flex-shrink: 0;
+ pointer-events: auto;
+}
