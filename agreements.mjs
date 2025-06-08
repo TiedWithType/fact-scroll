@@ -128,7 +128,7 @@ requestAnimationFrame(() => {
   dialog.removeAttribute("close");
   dialog.focus();
 });
-    }, 100)
+    }, 3000)
 
     dialog.addEventListener("cancel", e => {
       e.preventDefault();

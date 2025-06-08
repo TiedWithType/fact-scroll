@@ -4,6 +4,11 @@ window.addEventListener("load", async () => {
   eruda.init();
  }
  
+ const { SnapScrollManager
+ } = await import("./snap.manager.mjs");
+  
+ new SnapScrollManager();
+ 
  let { showUserAgreementDialog
  } = await import("./agreements.mjs");
  
@@ -16,9 +21,4 @@ window.addEventListener("load", async () => {
   } = await import("@vercel/speed-insights");
   injectSpeedInsights();
  }
- 
- const { SnapScrollManager
- } = await import("./snap.manager.mjs");
-  
- new SnapScrollManager();
 });
