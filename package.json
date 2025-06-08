@@ -23,9 +23,14 @@
   "author": "TiedWithType",
   "type": "module",
   "main": " ",
-  "scripts": {},
+  "scripts": {
+   "build": "vite build --target=esnext"
+  },
   "dependencies": {
-    "vite": "^6.3.5",
     "@vercel/speed-insights": "^1.2.0"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5",
+    "eruda": "^3.4.1"
   }
 }
