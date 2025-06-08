@@ -17,15 +17,15 @@ export function setCookie(name, value, days) {
 
 export function showUserAgreementDialog() {
   return new Promise(resolve => {
-    if (getCookie("userAgreement")) return resolve(true);
+    if (getCookie("userAgreement_v2")) return resolve(true);
 
     const dialog = DOMTools.create("dialog").appendTo(document.body);
 
     dialog.innerHTML = `
-      <h2>Informacja o ochronie danych</h2>
-      <p>Fakty są przechowywane lokalnie w postaci (JSON).</p>
-      <p>Informacja o zgodzie użytkownika zapisywana jest jako cookie (30 dni).</p>
-      <p>Dane wydajnościowe zbierane są anonimowo przez Vercel Speed Insights. <a href="https://vercel.com/docs/speed-insights/privacy-policy?utm_source=chatgpt.com" target="_blank" focus="false">Szczegóły</a>.</p>
+      <h2>Informacja o przetwarzaniu danych</h2>
+      <p>Dane są przechowywane lokalnie w postaci JSON.</p>
+      <p>Informacja o zgodzie użytkownika zapisywana jest jako cookie przez 30 dni.</p>
+      <p>Dane wydajnościowe zbierane są anonimowo przez Vercel Speed Insights. <a href="https://vercel.com/docs/speed-insights/privacy-policy?utm_source=chatgpt.com" target="groupA" rel="noopener" >Kliknij tu, aby przeczytać</a>.</p>
       <p>W każdej chwili możesz usunąć przechowywane dane za pomocą funkcji przeglądarki</p>
       <menu>
         <button id="accept">Akceptuję</button>
@@ -35,15 +35,18 @@ export function showUserAgreementDialog() {
 
     DOMTools.create("style", {
       innerHTML: `
+       dialog, dialog * {
+        outline: 0;
+       }
         dialog {
           font-family: 'Quicksand', sans-serif;
           position: fixed;
           inset: 0;
           padding: 1.5rem;
           border-radius: 12px;
-          background-color: #fff;
-          box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-          color: #222;
+          background-color: var(--textColor);
+          
+          color: var(--bgColor);
           display: flex;
           flex-direction: column;
           gap: 1rem;
@@ -69,18 +72,24 @@ export function showUserAgreementDialog() {
           pointer-events: none;
         }
 
-        h2 {
+        dialog h2 {
           font-size: 1.5rem;
           margin: 0 0 0.5rem 0;
         }
 
-        p {
+        dialog p {
           font-size: 1rem;
           line-height: 1.4;
           margin: 0;
+          text-wrap: pretty;
+        }
+        
+        dialog a, a:visited, a:active, a:hover {
+         text-decoration: none;
+         color: #4CAF50;
         }
 
-        menu {
+        dialog menu {
           display: flex;
           justify-content: space-between;
           gap: 1rem;
@@ -88,32 +97,33 @@ export function showUserAgreementDialog() {
           border: none;
         }
 
-        button {
-          padding: 0.5rem 1rem;
+        dialog button {
+          padding: 0.6rem 1.2rem;
           border: none;
-          border-radius: 6px;
+          border-radius: 5px;
           cursor: pointer;
-          font-weight: 600;
+          
           font-family: 'Quicksand', sans-serif;
-          font-size: 0.875rem;
+          font-size: 0.95rem;
         }
 
         #accept {
-          background-color: #4caf50;
+          background-color: #4CAF50;
           color: white;
         }
 
         #accept:hover {
-          background-color: #43a047;
+          
         }
 
         #decline {
-          background-color: #f44336;
-          color: white;
+          color: #FF5252;
+          background: transparent;
+          border: solid 1px;
         }
 
         #decline:hover {
-          background-color: #e53935;
+          
         }
       `
     }).appendTo(document.head);

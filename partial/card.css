@@ -8,9 +8,12 @@
  border-color: var(--linkActiveBackground);
  border-style: solid;
  border-radius: calc(var(--linkSize) * 2);
- color: var(--cardText);
- background: var(--cardBg);
+ color: var(--cardText, var(--textColor));
+ background: var(--cardBg, var(--bgColor));
  contain: content;
+ 
+ transition: border-color .1s ease-in;
+ will-change: border-color;
 
  .material-symbols-outlined {
   font-size: 2.5rem;
@@ -38,6 +41,7 @@
   text-align: center;
   margin: 0;
   line-height: 1.4;
+  text-wrap: pretty;
 
   @media (min-width: 621px) {
    font-size: clamp(1rem, 1.5vw, 1.75rem);

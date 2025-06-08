@@ -93,12 +93,16 @@ export class SnapScrollManager {
  async displayNavigation() {
   requestAnimationFrame(() => {
    this.nav.classList.add('visible');
+   document.querySelector(".switch").
+   classList.add("active")
   });
 
   clearTimeout(this.hook);
   this.hook = setTimeout(() => {
    this.nav.classList.remove('visible');
-  }, 2500);
+   document.querySelector(".switch").
+   classList.remove("active")
+  }, 4000);
  }
 
  async trackByIndicator(link, { snapRef }) {

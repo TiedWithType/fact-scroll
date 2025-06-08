@@ -4,38 +4,69 @@
 @import 'link.css';
 @import 'card.css';
 
+/* Zmienne ogólne */
 :root {
- --maskY: linear-gradient(
-  to bottom,
-  transparent,
-  black 15%,
-  black 85%,
-  transparent
- );
- --maskX: linear-gradient(
-  to right,
-  transparent,
-  black 15%,
-  black 85%,
-  transparent
- );
+  --maskY: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+  --maskX: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
 
- --bounce: cubic-bezier(0.55, 1.65, 0.49, 0.84);
-
- --textColor: #fff;
- --bgColor: #121212;
- --linkSize: 12px;
- --linkBackground: rgba(255, 255, 255, 0.2);
- --linkActiveBackground: rgba(255, 255, 255, 0.4);
- --cardOffset: 3rem;
+  --bounce: cubic-bezier(0.55, 1.65, 0.49, 0.84);
+  --linkSize: 12px;
+  --cardOffset: 3rem;
+  
+  
+  
+ color: var(--textColor);
+ background: var(--bgColor);
+ transition: all .1s ease-in;
+ will-change: color, background;
+ 
+ @starting-style {
+  color: var(--textColor);
+ background: var(--bgColor);
+ }
 }
 
+/* Motyw systemowy — light/dark via prefers-color-scheme */
+
+/* Motyw ustawiony ręcznie przez atrybut */
+:root[data-theme="light"] {
+  --textColor: #121212;
+  --bgColor: #fff;
+  --linkBackground: rgba(0,0,0, 0.2);
+  --linkActiveBackground: rgba(0,0,0, 0.4);
+}
+:root[data-theme="dark"] {
+  --textColor: #fff;
+  --bgColor: #121212;
+  --linkBackground: rgba(255, 255, 255, 0.2);
+  --linkActiveBackground: rgba(255, 255, 255, 0.4);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --textColor: #121212;
+    --bgColor: #fff;
+    --linkBackground: rgba(0,0,0, 0.2);
+    --linkActiveBackground: rgba(0,0,0, 0.4);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --textColor: #fff;
+    --bgColor: #121212;
+    --linkBackground: rgba(255, 255, 255, 0.2);
+    --linkActiveBackground: rgba(255, 255, 255, 0.4);
+  }
+}
+
+
+/* Reset */
 * {
- margin: 0;
- padding: 0;
- box-sizing: border-box;
- overscroll-behavior: contain;
- scrollbar-width: none;
- -ms-overflow-style: none;
- scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
 }
