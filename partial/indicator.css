@@ -1,31 +1,33 @@
 .indicator {
-  position: absolute;
-  border-radius: 50%;
-  block-size: var(--linkSize);
-  inline-size: var(--linkSize);
-  z-index: 0;
-  pointer-events: none;
-  background: var(--linkBackground);
-  transition: top 0.3s ease, left 0.3s ease;
-  will-change: top, left;
-  overflow: visible;
+ position: absolute;
+ border-radius: 50%;
+ block-size: var(--linkSize);
+ inline-size: var(--linkSize);
+ z-index: 0;
+ pointer-events: none;
+ background: var(--linkBackground);
+ transition:
+  top 0.3s ease,
+  left 0.3s ease;
+ will-change: top, left;
+ overflow: visible;
 }
 
 .indicator::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: var(--linkActiveBackground);
+ content: '';
+ position: absolute;
+ inset: 0;
+ border-radius: 50%;
+ background: var(--linkActiveBackground);
+ transform: scale(1);
+ opacity: 1;
+ will-change: opacity, transform;
+ animation: ripple-pulse 1.6s ease-out infinite;
+
+ @starting-style {
   transform: scale(1);
   opacity: 1;
-  will-change: opacity, transform;
-  animation: ripple-pulse 1.6s ease-out infinite;
- 
-  @starting-style {
-   transform: scale(1);
-   opacity: 1;
-  }
+ }
 }
 
 @keyframes ripple-pulse {
@@ -33,12 +35,12 @@
   transform: scale(1);
   opacity: 1;
  }
- 
+
  70% {
   transform: scale(2);
   opacity: 0;
  }
- 
+
  100% {
   transform: scale(1);
   opacity: 0;

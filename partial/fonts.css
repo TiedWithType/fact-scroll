@@ -1,14 +1,14 @@
 @font-face {
- font-family: "Quicksand";
- src: url("/fonts/regular.woff2") format("woff2");
+ font-family: 'Quicksand';
+ src: url('/fonts/regular.woff2') format('woff2');
  font-weight: 400;
  font-display: block;
  font-optical-size: auto;
 }
 
 @font-face {
- font-family: "Quicksand";
- src: url("/fonts/bold.woff2") format("woff2");
+ font-family: 'Quicksand';
+ src: url('/fonts/bold.woff2') format('woff2');
  font-weight: 700;
  font-display: block;
  font-optical-size: auto;

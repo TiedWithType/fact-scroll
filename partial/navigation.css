@@ -1,58 +1,58 @@
 .nav {
-  display: flex;
-  flex-direction: column;
-  place-items: center;
-  place-content: start;
-  gap: 0.5rem;
-  width: max-content;
-  padding: 0.5rem;
-  position: fixed;
-  pointer-events: none;
-  top: 50%;
-  right: 0;
-  opacity: 0;
-  transform: translate(24px, -50%);
-  transition: all ease-in 0.3s;
-  will-change: opacity, transform;
-  z-index: 1000;
+ display: flex;
+ flex-direction: column;
+ place-items: center;
+ place-content: start;
+ gap: 0.5rem;
+ width: max-content;
+ padding: 0.5rem;
+ position: fixed;
+ pointer-events: none;
+ top: 50%;
+ right: 0;
+ opacity: 0;
+ transform: translate(24px, -50%);
+ transition: all ease-in 0.3s;
+ will-change: opacity, transform;
+ z-index: 1000;
+
+ &.scrollable {
+  max-block-size: 200px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  mask-image: var(--maskY);
+  -webkit-mask-image: var(--maskY);
+ }
+
+ @media (min-width: 621px) {
+  flex-direction: row;
+  top: auto;
+  right: auto;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%) translateY(24px);
 
   &.scrollable {
-   max-block-size: 200px;
-   overflow-x: hidden;
-   overflow-y: scroll;
-   mask-image: var(--maskY);
-   -webkit-mask-image: var(--maskY);
+   max-height: none;
+   max-width: 200px;
+   overflow-y: hidden;
+   overflow-x: scroll;
+   mask-image: var(--maskX);
+   -webkit-mask-image: var(--maskX);
   }
+ }
+
+ &.visible {
+  opacity: 1;
+  transform: translate(1px, -50%);
 
   @media (min-width: 621px) {
-    flex-direction: row;
-    top: auto;
-    right: auto;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%) translateY(24px);
-    
-    &.scrollable {
-     max-height: none;
-     max-width: 200px;
-     overflow-y: hidden;
-     overflow-x: scroll;
-     mask-image: var(--maskX);
-    -webkit-mask-image: var(--maskX);
-    }
+   transform: translateX(-50%) translateY(-16px);
   }
+ }
 
-  &.visible {
-    opacity: 1;
-    transform: translate(-10px, -50%);
-
-    @media (min-width: 621px) {
-      transform: translateX(-50%) translateY(-16px);
-    }
-  }
-
-  @starting-style {
-    opacity: 0;
-    transform: translate(24px, -50%);
-  }
+ @starting-style {
+  opacity: 0;
+  transform: translate(24px, -50%);
+ }
 }

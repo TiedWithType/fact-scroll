@@ -1,25 +1,33 @@
-const cardTemplate = document.createElement("template");
+import { DOMTools } from "./lib/dom.tools.mjs";
 
-export function createCard({ icon, title, text, fg, bg }) {
- cardTemplate.innerHTML = `
-  <div
-   class="snap card"
-   style="--textColor: ${fg}; --bgColor: ${bg}">
-   <span class="material-symbols-outlined">
-    ${icon}
-   </span>
-   <h2>${title}</h2>
-   <p>${text}</p>
-  </div>
- `.trim();
-
- return cardTemplate.content.
- firstElementChild.cloneNode(true);
+export function createCard(props) {
+ return DOMTools.create("div", {
+  className: "snap card",
+  style: {
+   "--cardText": props.fg.trim(),
+   "--cardBg": props.bg.trim()
+  },
+  children: [
+   DOMTools.create("span", {
+    className: "material-symbols-outlined",
+    textContent: props.icon.trim()
+   }),
+   DOMTools.create("h2", {
+    textContent: props.title.trim()
+   }),
+   DOMTools.create("p", {
+    innerHTML: props.text.trim()
+   })
+  ],
+ });
 }
 
 export function generateCards(container, source) {
- source.forEach(fact => {
-  let card = createCard(fact);
-  container.appendChild(card)
- })
+ let fragment = DOMTools.create('fragment');
+ 
+ source.forEach(card => 
+  createCard(card).appendTo(fragment)
+ );
+ 
+ container.appendChild(fragment);
 }

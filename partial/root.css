@@ -1,18 +1,33 @@
-@import "fonts.css";
-@import "navigation.css";
-@import "indicator.css";
-@import "link.css";
-@import "card.css";
+@import 'fonts.css';
+@import 'navigation.css';
+@import 'indicator.css';
+@import 'link.css';
+@import 'card.css';
 
 :root {
- --maskY: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
- --maskX: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
- 
+ --maskY: linear-gradient(
+  to bottom,
+  transparent,
+  black 15%,
+  black 85%,
+  transparent
+ );
+ --maskX: linear-gradient(
+  to right,
+  transparent,
+  black 15%,
+  black 85%,
+  transparent
+ );
+
+ --bounce: cubic-bezier(0.55, 1.65, 0.49, 0.84);
+
  --textColor: #fff;
- --bgColor: #202124;
+ --bgColor: #121212;
  --linkSize: 12px;
  --linkBackground: rgba(255, 255, 255, 0.2);
  --linkActiveBackground: rgba(255, 255, 255, 0.4);
+ --cardOffset: 3rem;
 }
 
 * {
