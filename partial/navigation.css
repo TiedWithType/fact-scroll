@@ -44,10 +44,10 @@
 
  &.visible {
   opacity: 1;
-  transform: translate(1px, -50%);
+  transform: translate(2px, -50%);
 
   @media (min-width: 621px) {
-   transform: translateX(-50%) translateY(-16px);
+   transform: translateX(-50%) translateY(0);
   }
  }
 

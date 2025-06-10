@@ -36,95 +36,100 @@ export function showUserAgreementDialog() {
     DOMTools.create("style", {
       innerHTML: `
        dialog, dialog * {
-        outline: 0;
-       }
-        dialog {
-          font-family: 'Quicksand', sans-serif;
-          position: fixed;
-          inset: 0;
-          padding: 1.5rem;
-          border-radius: 12px;
-          background-color: var(--textColor);
-          
-          color: var(--bgColor);
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          max-height: 80vh;
-          margin: auto;
-          width: 80%;
-          overflow-y: auto;
-          opacity: 0;
-          transform: scale(0);
-          transition: opacity .5s ease, transform .5s ease;
-          pointer-events: none;
-        }
+  outline: 0;
+}
 
-        dialog[open]:not([close]) {
-          opacity: 1;
-          transform: scale(1);
-          pointer-events: auto;
-        }
+dialog {
+  font-family: 'Quicksand', sans-serif;
+  position: fixed;
+  inset: 0;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background-color: var(--textColor);
 
-        dialog[close] {
-          opacity: 0;
-          transform: scale(0);
-          pointer-events: none;
-        }
+  color: var(--bgColor);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 80vh;
+  margin: auto;
+  width: 80%;
+  overflow-y: auto;
 
-        dialog h2 {
-          font-size: 1.5rem;
-          margin: 0 0 0.5rem 0;
-        }
+  /* start hidden: przesunięty w dół i niewidoczny */
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+}
 
-        dialog p {
-          font-size: 1rem;
-          line-height: 1.4;
-          margin: 0;
-          text-wrap: pretty;
-        }
-        
-        dialog a, a:visited, a:active, a:hover {
-         text-decoration: none;
-         color: #4CAF50;
-        }
+dialog[open]:not([close]) {
+  /* widoczny i na właściwym miejscu */
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
 
-        dialog menu {
-          display: flex;
-          justify-content: space-between;
-          gap: 1rem;
-          padding: 0;
-          border: none;
-        }
+dialog[close] {
+  opacity: 0;
+  transform: translateY(100%);
+  pointer-events: none;
+}
 
-        dialog button {
-          padding: 0.6rem 1.2rem;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          
-          font-family: 'Quicksand', sans-serif;
-          font-size: 0.95rem;
-        }
+/* reszta bez zmian */
+dialog h2 {
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem 0;
+}
 
-        #accept {
-          background-color: #4CAF50;
-          color: white;
-        }
+dialog p {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin: 0;
+  text-wrap: pretty;
+}
 
-        #accept:hover {
-          
-        }
+dialog a, a:visited, a:active, a:hover {
+  text-decoration: none;
+  color: #4CAF50;
+}
 
-        #decline {
-          color: #FF5252;
-          background: transparent;
-          border: solid 1px;
-        }
+dialog menu {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0;
+  border: none;
+}
 
-        #decline:hover {
-          
-        }
+dialog button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.95rem;
+}
+
+#accept {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#accept:hover {
+  /* tu możesz dodać efekt hover */
+}
+
+#decline {
+  color: #FF5252;
+  background: transparent;
+  border: solid 1px;
+}
+
+#decline:hover {
+  /* tu możesz dodać efekt hover */
+}
       `
     }).appendTo(document.head);
     

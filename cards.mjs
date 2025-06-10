@@ -9,7 +9,7 @@ export function createCard(props) {
   },
   children: [
    DOMTools.create("span", {
-    className: "material-symbols-outlined",
+    className: "icon",
     textContent: props.icon.trim()
    }),
    DOMTools.create("h2", {

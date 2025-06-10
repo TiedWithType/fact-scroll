@@ -43,6 +43,10 @@ export class SnapScrollManager {
   await this.buildNavigation();
   await this.collectLinks();
   await this.assignEvents();
+  
+  window.addEventListener("resize", () => {
+   this.trackByIndicator.bind(this, { snapRef: this.link.dataset.snapRef})
+  })
  }
 
  async collectSnaps() {
@@ -120,6 +124,8 @@ export class SnapScrollManager {
   } else {
    indicator.style.top = `${offsetTop}px`;
   }
+  
+  this.link = link;
 
   link.scrollIntoView({
    behavior: 'smooth',

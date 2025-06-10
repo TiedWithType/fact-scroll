@@ -1,4 +1,4 @@
-.indicator {
+.nav .indicator {
  position: absolute;
  border-radius: 50%;
  block-size: var(--linkSize);
@@ -7,13 +7,13 @@
  pointer-events: none;
  background: var(--linkBackground);
  transition:
-  top 0.3s ease,
-  left 0.3s ease;
+ top 0.3s ease,
+ left 0.3s ease;
  will-change: top, left;
  overflow: visible;
 }
 
-.indicator::after {
+.nav .indicator::after {
  content: '';
  position: absolute;
  inset: 0;
