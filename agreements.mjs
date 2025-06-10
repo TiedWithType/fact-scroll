@@ -147,7 +147,7 @@ requestAnimationFrame(() => {
     });
 
     dialog.querySelector("#accept").addEventListener("click", () => {
-      setCookie("userAgreement", "accepted", 30);
+      setCookie("userAgreement_v2", "accepted", 30);
       dialog.setAttribute("close", "");
       setTimeout(() => {
         dialog.close();
