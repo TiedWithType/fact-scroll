@@ -1,63 +1,61 @@
 <!doctype html>
 <html lang="pl">
  <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <meta name="description" 
-   content="A scrollable journey through knowledge">
-  <title>FactScroll -
-   A scrollable journey through knowledge</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="description" content="A scrollable journey through knowledge" />
+  <title>FactScroll - A scrollable journey through knowledge</title>
   <link
    rel="preload"
    href="/data/facts.json"
    as="fetch"
-   crossorigin="anonymous">
+   crossorigin="anonymous"
+  />
   <link
    rel="preload"
    href="/fonts/regular.woff2"
    as="font"
    type="font/woff2"
-   crossorigin="anonymous">
+   crossorigin="anonymous"
+  />
   <link
    rel="preload"
    href="/fonts/bold.woff2"
    as="font"
    type="font/woff2"
-   crossorigin="anonymous">
+   crossorigin="anonymous"
+  />
   <link
    rel="preload"
    href="/fonts/symbols.woff2"
    as="font"
    type="font/woff2"
-   crossorigin="anonymous">
+   crossorigin="anonymous"
+  />
   <link rel="stylesheet" href="style.css" />
   <script>
-  (function() {
+   (function () {
     try {
-      const saved = localStorage.getItem("theme") || "auto";
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const applied = saved === "auto" ? (prefersDark ? "dark" : "light") : saved;
-      document.documentElement.setAttribute("data-theme", applied);
-    } catch(e) {}
-  })();
-</script>
-  <script src="main.mjs" type="module"></script>
+     const saved = localStorage.getItem('theme') || 'auto';
+     const prefersDark = window.matchMedia(
+      '(prefers-color-scheme: dark)',
+     ).matches;
+     const applied =
+      saved === 'auto' ? (prefersDark ? 'dark' : 'light') : saved;
+     document.documentElement.setAttribute('data-theme', applied);
+    } catch (e) {}
+   })();
+  </script>
+  <script src="main.ts" type="module"></script>
  </head>
  <body>
   <div class="switch">
-   <span data-theme="light">
-    light_mode
-   </span>
-   <span data-theme="dark">
-    dark_mode
-   </span>
-   <span data-theme="auto">
-    routine
-   </span>
+   <span data-theme="light"> light_mode </span>
+   <span data-theme="dark"> dark_mode </span>
+   <span data-theme="auto"> routine </span>
   </div>
   <div class="container">
-   <div data-snap-ref="static_hero_card"
-   class="snap card">
+   <div data-snap-ref="static_hero_card" class="snap card">
     <h2>Witaj w FactScroll</h2>
     <p>Przed Tobą 100 ciekawych faktów</p>
     <p>Przewijaj po wiedzy!</p>

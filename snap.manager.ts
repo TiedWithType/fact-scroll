@@ -1,15 +1,13 @@
-import { createCard, generateCards } from './cards.mjs';
-import { $ } from './lib/dom.mjs';
-import { DOMTools } from "./lib/dom.tools.mjs";
-import { loadFacts } from './lib/facts.mjs';
+import { createCard, generateCards } from './cards';
+import { $ } from './lib/dom';
+import { DOMTools } from './lib/dom.tools';
+import { loadFacts } from './lib/facts';
 
 export class SnapScrollManager {
  container = $.get('.container');
  hook = undefined;
  static isActive = false;
- events = [
-  'scroll', 'touchstart', 'mousemove', 'wheel'
- ];
+ events = ['scroll', 'touchstart', 'mousemove', 'wheel'];
 
  constructor() {
   const runInit = async () => {
@@ -30,8 +28,7 @@ export class SnapScrollManager {
    };
 
    this.events.forEach((event) =>
-    window.addEventListener(event, interaction, 
-    { passive: true }),
+    window.addEventListener(event, interaction, { passive: true }),
    );
 
    setTimeout(runInit, 3000);
@@ -43,88 +40,78 @@ export class SnapScrollManager {
   await this.buildNavigation();
   await this.collectLinks();
   await this.assignEvents();
-  
-  window.addEventListener("resize", () => {
-   this.trackByIndicator.bind(this, { snapRef: this.link.dataset.snapRef})
-  })
+
+  window.addEventListener('resize', () => {
+   this.trackByIndicator.bind(this, { snapRef: this.link.dataset.snapRef });
+  });
  }
 
  async collectSnaps() {
-  generateCards(this.container, await loadFacts());
+  await generateCards(this.container, await loadFacts());
   this.snaps = $.getAll('.snap', this.container);
  }
 
  async collectLinks() {
   this.links = $.getAll('.link', this.nav);
  }
- 
+
  buildLink(snap) {
   let uid = `
    snap_${Math.random().toString(36).slice(3)}
   `.trim();
 
-  return DOMTools.create("div", {
-   className: "link",
-   dataset: { 
-    snapRef: snap.dataset.snapRef ||= uid
+  return DOMTools.create('div', {
+   className: 'link',
+   dataset: {
+    snapRef: (snap.dataset.snapRef ||= uid),
    },
    events: {
-    click: () =>
-    snap.scrollIntoView({ behavior: 'smooth' })
-   }
+    click: () => snap.scrollIntoView({ behavior: 'smooth' }),
+   },
   });
  }
 
  async buildNavigation() {
-  this.nav = DOMTools.create("div", {
-   className: "nav navigator"
-  }).appendTo(document.body);
-  
-  DOMTools.create("fragment", {
-   children: this.snaps.map(snap => 
-    this.buildLink(snap)) 
-  }).appendTo(this.nav);
-  
-  this.indicator = DOMTools.create("div", {
-   className: "indicator"
-  }).appendTo(this.nav);
+  this.nav = DOMTools.create('div', {
+   className: `nav navigator${this.snaps.length > 10 ? ' scrollable' : ''}`,
+   children: [
+    DOMTools.create('fragment', {
+     children: this.snaps.map((snap) => this.buildLink(snap)),
+    }),
+    DOMTools.create('div', {
+     className: 'indicator',
+    }),
+   ],
+  }).appendTo(this.container);
 
-  if (this.nav.childElementCount > 10) {
-   this.nav.classList.add('scrollable');
-  }
+  this.indicator = this.nav.lastElementChild;
  }
 
  async displayNavigation() {
   requestAnimationFrame(() => {
    this.nav.classList.add('visible');
-   document.querySelector(".switch").
-   classList.add("active")
+   document.querySelector('.switch').classList.add('active');
   });
 
   clearTimeout(this.hook);
   this.hook = setTimeout(() => {
    this.nav.classList.remove('visible');
-   document.querySelector(".switch").
-   classList.remove("active")
+   document.querySelector('.switch').classList.remove('active');
   }, 4000);
  }
 
  async trackByIndicator(link, { snapRef }) {
   let isActive = link.dataset.snapRef === snapRef;
-  
   if (!isActive) return false;
 
-  const { offsetTop, offsetLeft } = link;
   const indicator = this.indicator;
 
-  const isRow = window.innerWidth >= 621;
+  const _type = window.innerWidth >= 621 ? 'left' : 'top';
 
-  if (isRow) {
-   indicator.style.left = `${offsetLeft}px`;
-  } else {
-   indicator.style.top = `${offsetTop}px`;
-  }
-  
+  const offset = window.innerWidth >= 621 ? link.offsetLeft : link.offsetTop;
+
+  indicator.style[_type] = `${offset}px`;
+
   this.link = link;
 
   link.scrollIntoView({
@@ -136,23 +123,19 @@ export class SnapScrollManager {
   return true;
  }
 
- async changingObserve(
-  { snapTargetInline: x, snapTargetBlock: y }
- ) {
-  let target = (x ?? y);
-  
+ async changingObserve({ snapTargetInline: x, snapTargetBlock: y }) {
+  let target = x ?? y;
+
   requestAnimationFrame(() => {
-   target.classList.add('visited')
-  })
-  
-  this.links.every((link) => 
-   this.trackByIndicator(link, target.dataset));
+   target.classList.add('visited');
+  });
+
+  this.links.every((link) => this.trackByIndicator(link, target.dataset));
  }
 
  async addEvent(name, callback) {
-  this.container.addEventListener(
-   name, callback.bind(this), {
-   passive: true
+  this.container.addEventListener(name, callback.bind(this), {
+   passive: true,
   });
  }
 
@@ -163,8 +146,7 @@ export class SnapScrollManager {
  }
 
  async changingEvent() {
-  this.addEvent('scrollsnapchanging', 
-   this.changingObserve);
+  this.addEvent('scrollsnapchanging', this.changingObserve);
  }
 
  async assignEvents() {

@@ -7,8 +7,8 @@
  pointer-events: none;
  background: var(--linkBackground);
  transition:
- top 0.3s ease,
- left 0.3s ease;
+  top 0.3s ease,
+  left 0.3s ease;
  will-change: top, left;
  overflow: visible;
 }

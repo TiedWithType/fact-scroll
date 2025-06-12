@@ -1,27 +1,25 @@
-import { DOMTools } from "./lib/dom.tools.mjs";
+import { DOMTools } from './lib/dom.tools';
 
 export function getCookie(name) {
-  const cookies = document.cookie.split("; ").map(c => c.split("="));
-  for (const [key, val] of cookies) {
-    if (key === name) return decodeURIComponent(val);
-  }
-  return null;
+ const cookies = document.cookie.split('; ').map((c) => c.split('='));
+ for (const [key, val] of cookies) {
+  if (key === name) return decodeURIComponent(val);
+ }
+ return null;
 }
 
 export function setCookie(name, value, days) {
-  const expires = days
-    ? "; max-age=" + days * 24 * 60 * 60
-    : "";
-  document.cookie = `${name}=${encodeURIComponent(value)}${expires}; path=/; SameSite=Lax`;
+ const expires = days ? '; max-age=' + days * 24 * 60 * 60 : '';
+ document.cookie = `${name}=${encodeURIComponent(value)}${expires}; path=/; SameSite=Lax`;
 }
 
 export function showUserAgreementDialog() {
-  return new Promise(resolve => {
-    if (getCookie("userAgreement_v2")) return resolve(true);
+ return new Promise((resolve) => {
+  if (getCookie('userAgreement_v2')) return resolve(true);
 
-    const dialog = DOMTools.create("dialog").appendTo(document.body);
+  const dialog = DOMTools.create('dialog').appendTo(document.body);
 
-    dialog.innerHTML = `
+  dialog.innerHTML = `
       <h2>Informacja o przetwarzaniu danych</h2>
       <p>Dane są przechowywane lokalnie w postaci JSON.</p>
       <p>Informacja o zgodzie użytkownika zapisywana jest jako cookie przez 30 dni.</p>
@@ -33,8 +31,8 @@ export function showUserAgreementDialog() {
       </menu>
     `;
 
-    DOMTools.create("style", {
-      innerHTML: `
+  DOMTools.create('style', {
+   innerHTML: `
        dialog, dialog * {
   outline: 0;
 }
@@ -130,44 +128,42 @@ dialog button {
 #decline:hover {
   /* tu możesz dodać efekt hover */
 }
-      `
-    }).appendTo(document.head);
-    
-    
+      `,
+  }).appendTo(document.head);
 
-    setTimeout(() => {
-     dialog.setAttribute("tabindex", "-1");
+  setTimeout(() => {
+   dialog.setAttribute('tabindex', '-1');
 
-requestAnimationFrame(() => {
-  dialog.showModal();
-  dialog.removeAttribute("close");
-  dialog.focus();
-});
-    }, 3000)
+   requestAnimationFrame(() => {
+    dialog.showModal();
+    dialog.removeAttribute('close');
+    dialog.focus();
+   });
+  }, 3000);
 
-    dialog.addEventListener("cancel", e => {
-      e.preventDefault();
-      dialog.setAttribute("close", "");
-      setTimeout(() => dialog.close(), 250);
-    });
-
-    dialog.querySelector("#accept").addEventListener("click", () => {
-      setCookie("userAgreement_v2", "accepted", 30);
-      dialog.setAttribute("close", "");
-      setTimeout(() => {
-        dialog.close();
-        resolve(true);
-      }, 250);
-    });
-
-    dialog.querySelector("#decline").addEventListener("click", () => {
-      sessionStorage.removeItem("facts");
-      localStorage.removeItem("facts");
-      dialog.setAttribute("close", "");
-      setTimeout(() => {
-        dialog.close();
-        resolve(false);
-      }, 250);
-    });
+  dialog.addEventListener('cancel', (e) => {
+   e.preventDefault();
+   dialog.setAttribute('close', '');
+   setTimeout(() => dialog.close(), 250);
   });
+
+  dialog.querySelector('#accept').addEventListener('click', () => {
+   setCookie('userAgreement_v2', 'accepted', 30);
+   dialog.setAttribute('close', '');
+   setTimeout(() => {
+    dialog.close();
+    resolve(true);
+   }, 250);
+  });
+
+  dialog.querySelector('#decline').addEventListener('click', () => {
+   sessionStorage.removeItem('facts');
+   localStorage.removeItem('facts');
+   dialog.setAttribute('close', '');
+   setTimeout(() => {
+    dialog.close();
+    resolve(false);
+   }, 250);
+  });
+ });
 }
