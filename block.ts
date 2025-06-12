@@ -1,5 +1,10 @@
 import { DOMTools } from './lib/dom.tools';
-import { v7 as uuidv7 } from 'https://cdn.jsdelivr.net/npm/uuid/dist/esm-browser/index.js';
+
+const uuid = () => {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
 
 const style = {
  card: {
@@ -15,7 +20,7 @@ const style = {
   placeContent: 'center',
   gap: '0.5rem',
   flexShrink: '0',
-  fontFamily: 'Quicksand',
+  fontFamily: 'Quicksand, sans',
   padding: '1.5rem',
   borderWidth: 'var(--linkSize)',
   borderColor: 'var(--linkActiveBackground)',
@@ -57,7 +62,7 @@ export default function (props = {}) {
  
  return DOMTools.create('div', {
   dataset: {
-   snapRef: uuidv7(),
+   snapRef: uuid(),
   },
   style: {
    ...style.card,

@@ -1,15 +1,8 @@
-import { DOMTools } from './lib/dom.tools';
-import block from "./block";
 
-block({
- title: "Witaj w FactScroll",
- text: [
-  "Przed Tobą ponad 100 ciekawych faktów",
-  "Przewijaj po wiedzy!!!"
- ],
- visited: true
-}).appendTo(
-document.querySelector(".container"))
+
+   import block from "./block";
+
+
 
 const themeSwitch = () => {
   const sw = document.querySelector('.switch');
@@ -60,6 +53,24 @@ const themeSwitch = () => {
 themeSwitch();
 
 window.addEventListener('load', async () => {
+ await document.fonts.ready;
+ 
+ setTimeout(() => {
+  document.querySelector
+  (".container").style.opacity="1"
+ }, 100);
+ 
+ block({
+ title: "Witaj w FactScroll",
+ text: [
+  "Przed Tobą ponad 100 ciekawych faktów",
+  "Przewijaj po wiedzy!!!"
+ ],
+ visited: true
+}).appendTo(
+document.querySelector(".container"))
+
+
   const { SnapScrollManager } = await import('./snap.manager');
   new SnapScrollManager();
 
