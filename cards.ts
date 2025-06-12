@@ -1,8 +1,13 @@
 import { DOMTools } from './lib/dom.tools';
+import { v7 as uuidv7 } from 'https://cdn.jsdelivr.net/npm/uuid/dist/esm-browser/index.js';
+import block from "./block";
 
 export async function createCard(props) {
  return DOMTools.create('div', {
   className: 'snap card',
+   dataset: {
+   snapRef: uuidv7(),
+  },
   style: {
    '--cardText': props.fg.trim(),
    '--cardBg': props.bg.trim(),
@@ -26,7 +31,7 @@ export async function generateCards(container, source) {
  let fragment = DOMTools.create('fragment');
 
  const cardPromises = source.map(async (card) => {
-  const cardElement = await createCard(card);
+  const cardElement = await block(card);
   cardElement.appendTo(fragment);
  });
 

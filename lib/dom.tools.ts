@@ -42,6 +42,21 @@ export class DOMTools {
       }
      }
      break;
+   
+   case "nodeMap":
+  const refs = {};
+  Object.values(value).forEach(obj => {
+    Object.entries(obj).forEach(([name, node]) => {
+      if (node instanceof Node) {
+        refs[name] = node;
+        el.appendChild(node);
+      }
+    });
+  });
+  el.refs = refs; // np. przypisz do elementu, żeby mieć dostęp na zewnątrz
+  break;  
+ 
+  
     default:
      if (!isFragment) Reflect.set(el, key, value);
    }
@@ -62,9 +77,9 @@ export class DOMTools {
    return this;
   },
   replaceWith(newEl) {
-   this.replaceWith(newEl);
-   return newEl;
-  },
+  this.parent.replaceChild(newEl, this);
+  return newEl;
+},
   wrapWith(wrapper) {
    this.replaceWith(wrapper);
    wrapper.appendChild(this);

@@ -47,33 +47,36 @@ export class SnapScrollManager {
  }
 
  async collectSnaps() {
-  await generateCards(this.container, await loadFacts());
-  this.snaps = $.getAll('.snap', this.container);
+  let f = await loadFacts();
+  
+  await generateCards(this.container, f);
+  this.snaps = $.getAll('[data-snap-ref]', this.container);
+  
+  console.log({snaps: this.snaps })
  }
 
  async collectLinks() {
-  this.links = $.getAll('.link', this.nav);
+  this.links = $.getAll('[data-snap-ref]', this.nav);
+  
+  console.log({links: this.links })
  }
 
  buildLink(snap) {
-  let uid = `
-   snap_${Math.random().toString(36).slice(3)}
-  `.trim();
-
   return DOMTools.create('div', {
    className: 'link',
    dataset: {
-    snapRef: (snap.dataset.snapRef ||= uid),
+    snapRef: snap.dataset.snapRef,
    },
    events: {
-    click: () => snap.scrollIntoView({ behavior: 'smooth' }),
+    click: () =>
+     snap.scrollIntoView({ behavior: 'smooth' }),
    },
   });
  }
 
  async buildNavigation() {
   this.nav = DOMTools.create('div', {
-   className: `nav navigator${this.snaps.length > 10 ? ' scrollable' : ''}`,
+   className: `nav${this.snaps.length > 10 ? ' scrollable' : ''}`,
    children: [
     DOMTools.create('fragment', {
      children: this.snaps.map((snap) => this.buildLink(snap)),
@@ -127,7 +130,12 @@ export class SnapScrollManager {
   let target = x ?? y;
 
   requestAnimationFrame(() => {
-   target.classList.add('visited');
+   [...target.children].forEach(child =>
+    Object.assign(child.style, {
+     opacity: "1",
+     transform: "scale(1)"
+    })
+   )
   });
 
   this.links.every((link) => this.trackByIndicator(link, target.dataset));

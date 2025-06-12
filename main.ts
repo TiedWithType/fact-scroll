@@ -1,67 +1,68 @@
+import { DOMTools } from './lib/dom.tools';
+import block from "./block";
+
+block({
+ title: "Witaj w FactScroll",
+ text: [
+  "Przed Tobą ponad 100 ciekawych faktów",
+  "Przewijaj po wiedzy!!!"
+ ],
+ visited: true
+}).appendTo(
+document.querySelector(".container"))
+
 const themeSwitch = () => {
- const DEBUG = false;
- const log = (...args) =>
-  DEBUG && console.log('%c[ThemeSwitch]', 'color: goldenrod', ...args);
+  const sw = document.querySelector('.switch');
+  if (!sw) return;
 
- const sw = document.querySelector('.switch');
- if (!sw) return;
+  const nodes = Array.from(sw.children);
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
- const nodes = Array.from(sw.children);
- const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+  const disableSnapAnimationsTemporarily = () => {
+    document.documentElement.classList.add('theme-changing');
+    setTimeout(() => {
+      document.documentElement.classList.remove('theme-changing');
+    }, 300);
+  };
 
- // ðŸ”§ Tymczasowo wyÅ‚Ä…cz animacje .snap.visited *
- const disableSnapAnimationsTemporarily = () => {
-  document.documentElement.classList.add('theme-changing');
-  setTimeout(() => {
-   document.documentElement.classList.remove('theme-changing');
-  }, 300); // Dopasuj do najdÅ‚uÅ¼szej delay/transition w .snap.visited *
- };
+  const setTheme = (theme) => {
+    disableSnapAnimationsTemporarily();
 
- // ðŸ”„ GÅ‚Ã³wna funkcja zmieniajÄ…ca motyw
- const setTheme = (theme) => {
-  disableSnapAnimationsTemporarily(); // ðŸ›‘ zablokuj animacje .snap
+    const appliedTheme = theme === 'auto'
+      ? (prefersDark.matches ? 'dark' : 'light')
+      : theme;
 
-  let appliedTheme = theme;
-  if (theme === 'auto') {
-   appliedTheme = prefersDark.matches ? 'dark' : 'light';
-  }
+    document.documentElement.setAttribute('data-theme', appliedTheme);
+    localStorage.setItem('theme', theme);
 
-  document.documentElement.setAttribute('data-theme', appliedTheme);
-  localStorage.setItem('theme', theme);
+    nodes.forEach((n) => {
+      n.classList.toggle('active', n.dataset.theme === theme);
+    });
+  };
 
-  nodes.forEach((n) => n.classList.toggle('active', n.dataset.theme === theme));
+  const savedTheme = localStorage.getItem('theme') || 'auto';
+  setTheme(savedTheme);
 
-  log('Ustawiono motyw:', theme, `(realnie: ${appliedTheme})`);
- };
-
- // ðŸ”ƒ Ustaw motyw na starcie
- const savedTheme = localStorage.getItem('theme') || 'auto';
- setTheme(savedTheme);
-
- // ðŸ–± ObsÅ‚uga klikniÄ™Ä‡
- nodes.forEach((node) => {
-  node.addEventListener('click', (e) => {
-   const theme = e.currentTarget.dataset.theme;
-   if (theme) setTheme(theme);
+  nodes.forEach((node) => {
+    node.addEventListener('click', ({ currentTarget }) => {
+      const theme = currentTarget.dataset.theme;
+      if (theme) setTheme(theme);
+    });
   });
- });
 
- // ðŸŒ™ Reakcja na zmianÄ™ motywu systemowego, jeÅ›li aktywny "auto"
- prefersDark.addEventListener('change', () => {
-  if (localStorage.getItem('theme') === 'auto') {
-   setTheme('auto');
-  }
- });
+  prefersDark.addEventListener('change', () => {
+    if (localStorage.getItem('theme') === 'auto') {
+      setTheme('auto');
+    }
+  });
 };
 
 themeSwitch();
 
 window.addEventListener('load', async () => {
- const { SnapScrollManager } = await import('./snap.manager');
+  const { SnapScrollManager } = await import('./snap.manager');
+  new SnapScrollManager();
 
- new SnapScrollManager();
-
- let { showUserAgreementDialog } = await import('./agreements');
-
- const agreed = await showUserAgreementDialog();
+  const { showUserAgreementDialog } = await import('./agreements');
+  const agreed = await showUserAgreementDialog();
 });
