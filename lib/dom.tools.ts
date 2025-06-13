@@ -1,4 +1,13 @@
 export class DOMTools {
+ static collection(tagName, rootEl = document) {
+  let nodes = 
+  Array.from(rootEl.querySelectorAll(tagName));
+  
+  return nodes.length > 1
+  ? nodes
+  : nodes[0] ?? null;
+ }
+
  static create(tag, options = {}) {
   const isFragment = tag === 'fragment';
   const el = isFragment
@@ -42,21 +51,20 @@ export class DOMTools {
       }
      }
      break;
-   
-   case "nodeMap":
-  const refs = {};
-  Object.values(value).forEach(obj => {
-    Object.entries(obj).forEach(([name, node]) => {
-      if (node instanceof Node) {
+
+    case 'nodeMap':
+     const refs = {};
+     Object.values(value).forEach((obj) => {
+      Object.entries(obj).forEach(([name, node]) => {
+       if (node instanceof Node) {
         refs[name] = node;
         el.appendChild(node);
-      }
-    });
-  });
-  el.refs = refs; // np. przypisz do elementu, żeby mieć dostęp na zewnątrz
-  break;  
- 
-  
+       }
+      });
+     });
+     el.refs = refs; // np. przypisz do elementu, żeby mieć dostęp na zewnątrz
+     break;
+
     default:
      if (!isFragment) Reflect.set(el, key, value);
    }
@@ -77,9 +85,9 @@ export class DOMTools {
    return this;
   },
   replaceWith(newEl) {
-  this.parent.replaceChild(newEl, this);
-  return newEl;
-},
+   this.parent.replaceChild(newEl, this);
+   return newEl;
+  },
   wrapWith(wrapper) {
    this.replaceWith(wrapper);
    wrapper.appendChild(this);

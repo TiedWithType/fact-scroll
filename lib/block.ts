@@ -1,18 +1,22 @@
-import { DOMTools } from './lib/dom.tools';
+import { DOMTools } from './dom.tools';
 
 const uuid = () => {
-  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-  );
-}
+ return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+  (
+   c ^
+   (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+  ).toString(16),
+ );
+};
 
 const style = {
  card: {
   height: 'calc(100dvh - var(--cardOffset))',
   width: 'calc(100vw - var(--cardOffset))',
-  margin: (window.innerWidth >= 621)
-  ? "auto var(--cardOffset)"
-  : 'var(--cardOffset) auto',
+  margin:
+   window.innerWidth >= 621
+    ? 'auto var(--cardOffset)'
+    : 'var(--cardOffset) auto',
   scrollSnapAlign: 'center',
   display: 'flex',
   flexDirection: 'column',
@@ -37,11 +41,11 @@ const style = {
   lineHeight: 'clamp(1.2, 1.5vw, 1.4)',
   textAlign: 'center',
   marginBottom: '0.5rem',
-  willChange: "opacity, transform",
-  transition: "all 0.6s var(--bounce)",
-  transitionDelay: ".9s",
-  opacity: "0",
-  transform: "scale(0.1)",
+  willChange: 'opacity, transform',
+  transition: 'all 0.6s var(--bounce)',
+  transitionDelay: '.9s',
+  opacity: '0',
+  transform: 'scale(0.1)',
  },
  content: {
   fontSize: 'clamp(1rem, 1.5vw, 1.75rem)',
@@ -49,17 +53,17 @@ const style = {
   textAlign: 'center',
   margin: 0,
   textWrap: 'pretty',
-  willChange: "opacity, transform",
-  transition: "all 0.6s var(--bounce)", 
-  transitionDelay: "1.5s",
-  opacity: "0",
-  transform: "scale(0.1)",
- }
+  willChange: 'opacity, transform',
+  transition: 'all 0.6s var(--bounce)',
+  transitionDelay: '1.5s',
+  opacity: '0',
+  transform: 'scale(0.1)',
+ },
 };
 
 export default function (props = {}) {
  const { visited } = props;
- 
+
  return DOMTools.create('div', {
   dataset: {
    snapRef: uuid(),
@@ -80,9 +84,9 @@ export default function (props = {}) {
          color: 'var(--cardText, var(--textColor))',
          opacity: visited ? '1' : '0',
          transform: `scale(${visited ? '1' : '0.1'})`,
-         willChange: "opacity, transform",
-         transition: "all 0.6s var(--bounce)",
-         transitionDelay: ".3s"
+         willChange: 'opacity, transform',
+         transition: 'all 0.6s var(--bounce)',
+         transitionDelay: '.3s',
         },
         textContent: props.icon,
        }),
@@ -105,8 +109,9 @@ export default function (props = {}) {
    ...(Array.isArray(props.text)
     ? props.text.map((t) =>
        DOMTools.create('p', {
-        style: { ...style.content,
-        opacity: visited ? '1' : '0',
+        style: {
+         ...style.content,
+         opacity: visited ? '1' : '0',
          transform: `scale(${visited ? '1' : '0.1'})`,
         },
         innerHTML: t,
@@ -115,9 +120,10 @@ export default function (props = {}) {
     : props.text
       ? [
          DOMTools.create('p', {
-          style: {...style.content,
-          opacity: visited ? '1' : '0',
-         transform: `scale(${visited ? '1' : '0.1'})`,
+          style: {
+           ...style.content,
+           opacity: visited ? '1' : '0',
+           transform: `scale(${visited ? '1' : '0.1'})`,
           },
           innerHTML: props.text,
          }),

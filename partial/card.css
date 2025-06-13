@@ -13,7 +13,6 @@
  contain: content;
  transition: border-color 0.1s ease-in;
  will-change: border-color;
- 
 
  .icon {
   font-family: 'Symbols';

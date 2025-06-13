@@ -1,46 +1,43 @@
 @import '/partial/root.css';
 
-@keyframes spin {
- from { transform: rotate(0deg); }
- to { transform: rotate(360deg); }
-}
-
 .switch {
-  z-index: 2000;
-  background: var(--indigo);
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  display: flex;
-  gap: 1rem;
-  inline-size: min-content;
-  font-size: 1.2rem;
-  position: fixed;
-  top: 0.5rem;
-  left: 50%;
-  transform: translate(-50%, -48px);
-  opacity: 0;
+ z-index: 2000;
+ background: var(--indigo);
+ padding: 0.5rem 1rem;
+ border-radius: 0.5rem;
+ display: flex;
+ gap: 1rem;
+ inline-size: min-content;
+ font-size: 1.2rem;
+ position: fixed;
+ top: 0.5rem;
+ left: 50%;
+ transform: translate(-50%, -48px);
+ opacity: 0;
 
-  /* Animujemy transform i opacity osobno od koloru */
-  transition: transform 0.3s ease-in, opacity 0.3s ease;
-  font-family: 'Symbols';
-  will-change: color, transform, opacity;
+ /* Animujemy transform i opacity osobno od koloru */
+ transition:
+  transform 0.3s ease-in,
+  opacity 0.3s ease;
+ font-family: 'Symbols';
+ will-change: color, transform, opacity;
 }
 
 .switch.active {
-  transform: translate(-50%, 0);
-  opacity: 1;
+ transform: translate(-50%, 0);
+ opacity: 1;
 }
 
 /* Styl bazowy dla span */
 .switch span {
-  color: #fff; /* domyślny kolor */
-  transition: color .2s ease-in;
-  will-change: color;
+ color: #fff; /* domyślny kolor */
+ transition: color 0.2s ease-in;
+ will-change: color;
 }
 
 /* Kolor, który chcemy animować po aktywacji */
 .switch.active span.active {
-  color: var(--pink);
+ color: var(--pink);
 }
 
 html,
@@ -70,7 +67,11 @@ body {
  display: flex;
  flex-direction: column;
  opacity: 0;
- transition: opacity .2s ease-in;
+ transition: opacity 0.2s ease-in;
+ 
+ &.render {
+  opacity: 1;
+ }
 
  @media (min-width: 621px) {
   flex-direction: row;
