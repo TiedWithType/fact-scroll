@@ -1,7 +1,8 @@
-import { createCard, generateCards } from './cards';
+//import { createCard, generateCards } from './cards';
 import { $ } from './lib/dom';
 import { DOMTools } from './lib/dom.tools';
 import { loadFacts } from './lib/facts';
+import block from "./block";
 
 export class SnapScrollManager {
  container = $.get('.container');
@@ -47,18 +48,28 @@ export class SnapScrollManager {
  }
 
  async collectSnaps() {
-  let f = await loadFacts();
+  const f = await loadFacts();
+
+  const batchSize = 10;
+
+  for (let i = 0; i < f.length; i += batchSize) {
   
-  await generateCards(this.container, f);
+    const batch = f.slice(i, i + batchSize);
+
+    for (const card of batch) {
+      await block(card).appendTo(this.container);
+    }
+    
+    await new Promise(resolve => 
+    setTimeout(resolve, 0)); 
+  }
+
   this.snaps = $.getAll('[data-snap-ref]', this.container);
   
-  console.log({snaps: this.snaps })
- }
+}
 
  async collectLinks() {
   this.links = $.getAll('[data-snap-ref]', this.nav);
-  
-  console.log({links: this.links })
  }
 
  buildLink(snap) {

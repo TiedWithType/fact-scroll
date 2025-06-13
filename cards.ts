@@ -2,14 +2,16 @@ import { DOMTools } from './lib/dom.tools';
 import block from "./block";
 
 export async function generateCards(container, source) {
- let fragment = DOMTools.create('fragment');
+  const fragment = DOMTools.create('fragment');
 
- const cardPromises = source.map(async (card) => {
-  const cardElement = await block(card);
-  cardElement.appendTo(fragment);
- });
+  for (const card of source) {
+    const cardElement = await block(card);
+    cardElement.appendTo(fragment);
 
- await Promise.all(cardPromises);
+    // Oddaj kontrolę pętli, by UI się odświeżył
+    await new Promise(resolve =>
+    setTimeout(resolve, 0)); 
+  }
 
- container.appendChild(fragment);
+  container.appendChild(fragment);
 }
