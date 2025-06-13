@@ -2,7 +2,6 @@
 @import 'navigation.css';
 @import 'indicator.css';
 @import 'link.css';
-@import 'card.css';
 
 :root {
  --maskY: linear-gradient(
@@ -26,6 +25,16 @@
  --cardOffset: 3rem;
  --pink: #ff4081;
  --indigo: #3f51b5;
+ 
+ @media (prefers-color-scheme: light) {
+  --textColor: #fff;
+  --bgColor: #202124;
+ }
+ 
+ @media (prefers-color-scheme: dark) {
+  --textColor: #fff;
+  --bgColor: #202124;
+ }
 }
 
 :root[data-theme='light'] {

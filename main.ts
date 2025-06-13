@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', async () => {
+window.addEventListener('load', async () => {
  const themes = await import("./lib/themes");
  
  await themes.themeSwitch();
