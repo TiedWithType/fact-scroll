@@ -1,4 +1,8 @@
 export class DOMTools {
+ static style(node, props = {}) {
+  Object.assign(node.style, props);
+ }
+ 
  static collection(tagName, rootEl = document) {
   let nodes = 
   Array.from(rootEl.querySelectorAll(tagName));

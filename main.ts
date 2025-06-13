@@ -1,8 +1,7 @@
-window.addEventListener('load', async () => {
- const { themeSwitch } = await import("./lib/themes");
+document.addEventListener('DOMContentLoaded', async () => {
+ const themes = await import("./lib/themes");
  
- themeSwitch();
- 
+ await themes.themeSwitch();
  await document.fonts.ready;
 
  setTimeout(() => {
@@ -25,6 +24,8 @@ window.addEventListener('load', async () => {
  `.trim(),
  }).appendTo(document.querySelector('.container'));
 
- const { SnapScrollManager } = await import('./lib/snap.manager');
- new SnapScrollManager();
+ const { SnapScrollManager } =
+ await import('./lib/snap.manager');
+ 
+ Reflect.construct(SnapScrollManager, []).init();
 });

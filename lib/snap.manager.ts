@@ -1,71 +1,41 @@
 import { DOMTools } from './dom.tools';
-import { loadFacts } from './facts';
 import block from './block';
 
 export class SnapScrollManager {
  container = DOMTools.collection('.container');
+ sw = DOMTools.collection('.switch');
  hook = undefined;
- static isActive = false;
- events = ['scroll', 'touchstart', 'mousemove', 'wheel'];
-
- constructor() {
-  const runInit = async () => {
-   if (!SnapScrollManager.isActive) {
-    await this.init();
-    SnapScrollManager.isActive = true;
-   }
-  };
-
-  if ('requestIdleCallback' in window) {
-   requestIdleCallback(runInit, { timeout: 2000 });
-  } else {
-   const interaction = () => {
-    runInit();
-    this.events.forEach((event) =>
-     window.removeEventListener(event, interaction),
-    );
-   };
-
-   this.events.forEach((event) =>
-    window.addEventListener(event, interaction, { passive: true }),
-   );
-
-   setTimeout(runInit, 3000);
-  }
- }
-
- async init() {
+ 
+ async init(timer = 4000) {
+  this.timer = timer;
   await this.collectSnaps();
   await this.buildNavigation();
   await this.collectLinks();
   await this.assignEvents();
-
-  window.addEventListener('resize', () => {
-   this.trackByIndicator.bind(this, { snapRef: this.link.dataset.snapRef });
-  });
  }
 
  async collectSnaps() {
-  const f = await loadFacts('/data/facts.json');
-
-  const batchSize = 10;
-
-  for (let i = 0; i < f.length; i += batchSize) {
-   const batch = f.slice(i, i + batchSize);
-
-   for (const card of batch) {
-    await block(card).appendTo(this.container);
+  const { loadFacts } = await import("./facts");
+  
+  for(let x = 0; x < 5; x++) {
+   let chunk = await loadFacts(`fact_00${x}`);
+   
+   for(let chunkData of chunk) {
+    await block(chunkData).appendTo(this.container);
    }
-
+   
    await new Promise((resolve) =>
     setTimeout(resolve, 0));
   }
 
-  this.snaps = DOMTools.collection('[data-snap-ref]', this.container);
+  this.snaps =
+   DOMTools.collection('[data-snap-ref]',
+   this.container);
  }
 
  async collectLinks() {
-  this.links = DOMTools.collection('[data-snap-ref]', this.nav);
+  this.links = 
+   DOMTools.collection('[data-snap-ref]', this.nav);
  }
 
  buildLink(snap) {
@@ -75,17 +45,20 @@ export class SnapScrollManager {
     snapRef: snap.dataset.snapRef,
    },
    events: {
-    click: () => snap.scrollIntoView({ behavior: 'smooth' }),
+    click: () =>
+    snap.scrollIntoView({ behavior: 'smooth' }),
    },
   });
  }
 
  async buildNavigation() {
   this.nav = DOMTools.create('div', {
-   className: `nav ${this.snaps.length > 10 ? ' scrollable' : ''}`,
+   className: `nav
+    ${this.snaps.length > 10 && 'scrollable'}`,
    children: [
     DOMTools.create('fragment', {
-     children: this.snaps.map((snap) => this.buildLink(snap)),
+     children: this.snaps.map((snap) =>
+      this.buildLink(snap)),
     }),
     DOMTools.create('div', {
      className: 'indicator',
@@ -99,29 +72,27 @@ export class SnapScrollManager {
  async displayNavigation() {
   requestAnimationFrame(() => {
    this.nav.classList.add('visible');
-   DOMTools.collection('.switch').classList.add('active');
+   this.sw.classList.add('active');
   });
 
   clearTimeout(this.hook);
+  
   this.hook = setTimeout(() => {
    this.nav.classList.remove('visible');
-   DOMTools.collection('.switch').classList.remove('active');
-  }, 4000);
+   this.sw.classList.remove('active');
+  }, this.timer);
  }
 
  async trackByIndicator(link, { snapRef }) {
-  let isActive = link.dataset.snapRef === snapRef;
-  if (!isActive) return false;
-
-  const indicator = this.indicator;
-
-  const _type = window.innerWidth >= 621 ? 'left' : 'top';
-
-  const offset = window.innerWidth >= 621 ? link.offsetLeft : link.offsetTop;
-
-  indicator.style[_type] = `${offset}px`;
-
-  this.link = link;
+  if (link.dataset.snapRef != snapRef) return false;
+  
+  let data = (window.innerWidth >= 621)
+  ? { type: "left", offset: link.offsetLeft }
+  : { type: "top",  offset: link.offsetTop }
+  
+  DOMTools.style(this.indicator, {
+   [data.type]: `${data.offset}px`
+  });
 
   link.scrollIntoView({
    behavior: 'smooth',
@@ -132,39 +103,50 @@ export class SnapScrollManager {
   return true;
  }
 
- async changingObserve({ snapTargetInline: x, snapTargetBlock: y }) {
-  let target = x ?? y;
+ async changingObserve({
+  snapTargetInline,
+  snapTargetBlock
+ }) {
+  let target = snapTargetInline ?? snapTargetBlock;
 
   requestAnimationFrame(() => {
    [...target.children].forEach((child) =>
-    Object.assign(child.style, {
+    DOMTools.style(child, {
      opacity: '1',
      transform: 'scale(1)',
     }),
    );
   });
 
-  this.links.every((link) => this.trackByIndicator(link, target.dataset));
+  this.links.every((link) =>
+   this.trackByIndicator(link, target.dataset));
  }
 
- async addEvent(name, callback) {
-  this.container.addEventListener(name, callback.bind(this), {
+ addEvent(name, cb, options = {}) {
+  const ref = this.container;
+  name = name.toLowerCase();
+  
+  ref.addEventListener(name, cb.bind(this), {
+   ...options,
    passive: true,
   });
  }
-
- async scrollEvent() {
-  this.events.forEach((ev) => {
-   this.addEvent(ev, this.displayNavigation);
+ 
+ mapEvents(map, options = {}) {
+  Object.entries(map).forEach(([key, value]) => {
+   Array.isArray(value)
+   ? [...value].forEach(handler =>
+    this.addEvent(key, handler, options)
+   ) : this.addEvent(key, value, options)
   });
  }
 
- async changingEvent() {
-  this.addEvent('scrollsnapchanging', this.changingObserve);
- }
-
  async assignEvents() {
-  await this.scrollEvent();
-  await this.changingEvent();
+  this.mapEvents({
+   scrollsnapchanging: [
+    this.changingObserve,
+    this.displayNavigation
+   ]
+  })
  }
 }
