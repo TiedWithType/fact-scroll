@@ -22,7 +22,6 @@
  "license": "ISC",
  "author": "TiedWithType",
  "type": "module",
- "main": " ",
  "scripts": {
   "start": "vite --open",
   "build": "vite build --target=esnext"
