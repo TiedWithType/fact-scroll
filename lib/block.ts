@@ -61,7 +61,7 @@ const style = {
  },
 };
 
-export default function (props = {}) {
+export const block = (props = {}) => {
  const { visited } = props;
 
  return DOMTools.create('div', {

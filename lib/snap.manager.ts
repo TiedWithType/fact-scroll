@@ -1,5 +1,6 @@
 import { DOMTools } from './dom.tools';
-import block from './block';
+import { block } from './block';
+import { loadFacts } from "./facts";
 
 export class SnapScrollManager {
  container = DOMTools.collection('.container');
@@ -15,8 +16,6 @@ export class SnapScrollManager {
  }
  
  async batchLoad(chunkName, count) {
-  const { loadFacts } = await import("./facts");
-  
   for(let x = 0; x < count; x++) {
    let chunk = await loadFacts(`${chunkName}${x}`);
    
@@ -29,7 +28,6 @@ export class SnapScrollManager {
  }
  
  async nonbatchLoad(file) {
-  const { loadFacts } = await import("./facts");
   const data = await loadFacts(file);
   
   for(const obj of data) {
