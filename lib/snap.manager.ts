@@ -13,20 +13,32 @@ export class SnapScrollManager {
   await this.collectLinks();
   await this.assignEvents();
  }
-
- async collectSnaps() {
+ 
+ async batchLoad(chunkName, count) {
   const { loadFacts } = await import("./facts");
   
-  for(let x = 0; x < 5; x++) {
-   let chunk = await loadFacts(`fact_00${x}`);
+  for(let x = 0; x < count; x++) {
+   let chunk = await loadFacts(`${chunkName}${x}`);
    
    for(let chunkData of chunk) {
     await block(chunkData).appendTo(this.container);
    }
    
-   await new Promise((resolve) =>
-    setTimeout(resolve, 0));
+   await new Promise(r => setTimeout(r, 0));
   }
+ }
+ 
+ async nonbatchLoad(file) {
+  const { loadFacts } = await import("./facts");
+  const data = await loadFacts(file);
+  
+  for(const obj of data) {
+   await block(obj).appendTo(this.container);
+  }
+ }
+
+ async collectSnaps() {
+  await this.nonbatchLoad("facts");
 
   this.snaps =
    DOMTools.collection('[data-snap-ref]',
@@ -87,8 +99,8 @@ export class SnapScrollManager {
   if (link.dataset.snapRef != snapRef) return false;
   
   let data = (window.innerWidth >= 621)
-  ? { type: "left", offset: link.offsetLeft }
-  : { type: "top",  offset: link.offsetTop }
+  ? { type: 'left', offset: link.offsetLeft }
+  : { type: 'top',  offset: link.offsetTop }
   
   DOMTools.style(this.indicator, {
    [data.type]: `${data.offset}px`
